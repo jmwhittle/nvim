@@ -1,0 +1,14 @@
+WITH cte_min_year AS (
+    SELECT
+        MIN(year) AS year,
+        product_id
+    FROM Sales
+    GROUP BY product_id
+)
+SELECT
+    my.product_id AS product_id,
+    my.year AS first_year,
+    s.quatity AS quantity,
+    s.price AS price
+FROM cte_min_year my
+LEFT JOIN Sales s ON my.year = s.year AND my.product_id = s.product_id
